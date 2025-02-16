@@ -1,44 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Weather App</h1>
-        <input type="text" id="location" placeholder="Enter location">
-        <button onclick="getWeather()">Get Weather</button>
-        <div class="weather-info" id="weather-info"></div>
+
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Weather App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <script>
-        async function getWeather() {
-            let location = document.getElementById('location').value;
-            if (!location) {
-                alert('Please enter a location');
-                return;
-            }
-            let apiKey = '4ab434ff44164fb7970130846251602';
-            let url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
 
-            try {
-                let response = await fetch(url);
-                let data = await response.json();
-                document.getElementById('weather-info').innerHTML = `
-                    <h2>${data.location.name}, ${data.location.country}</h2>
-                    <h3>${data.current.temp_c}°C</h3>
-                    <p>${data.current.condition.text}</p>
-                    <p>Humidity: ${data.current.humidity}%</p>
-                    <p>Wind Speed: ${data.current.wind_kph} km/h</p>
-                    <img src="${data.current.condition.icon}" alt="Weather Icon">
-                `;
-            } catch (error) {
-                alert('Could not fetch weather data. Please check the location.');
-            }
-        }
-    </script>
-</body>
+    <!-- Main Content -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <h1 class="mb-4">Weather App</h1>
+        <div class="search-container mb-4">
+          <input type="text" id="city-input" class="form-control" placeholder="Enter city name">
+          <button id="search-btn" class="btn btn-primary mt-3">Search</button>
+        </div>
+        <div id="weather-info" class="card p-4">
+          <!-- Weather details will be displayed here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+      <p class="mb-0">&copy; 2025 Weather App By Nikhil. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+  </body>
 </html>
