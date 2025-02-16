@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Congratualtions</h1>
+    <div class="container">
+        <h1>Weather App</h1>
+        <input type="text" id="location" placeholder="Enter location">
+        <button onclick="getWeather()">Get Weather</button>
+        <div class="weather-info" id="weather-info"></div>
+    </div>
+
+    <script>
+        async function getWeather() {
+            let location = document.getElementById('location').value;
+            if (!location) {
+                alert('Please enter a location');
+                return;
+            }
+            let apiKey = '4ab434ff44164fb7970130846251602';
+            let url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
+
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                document.getElementById('weather-info').innerHTML = `
+                    <h2>${data.location.name}, ${data.location.country}</h2>
+                    <h3>${data.current.temp_c}°C</h3>
+                    <p>${data.current.condition.text}</p>
+                    <p>Humidity: ${data.current.humidity}%</p>
+                    <p>Wind Speed: ${data.current.wind_kph} km/h</p>
+                    <img src="${data.current.condition.icon}" alt="Weather Icon">
+                `;
+            } catch (error) {
+                alert('Could not fetch weather data. Please check the location.');
+            }
+        }
+    </script>
 </body>
 </html>
